@@ -1,0 +1,44 @@
+GÖKYÜZÜ PARKURU – APK NASIL OLUŞTURULUR
+========================================
+
+Bu klasör hazır bir Android projesi. Oyun internetsiz çalışır.
+Aşağıdaki iki yoldan birini seçmeniz yeterli.
+
+
+YOL A – Bilgisayara hiçbir şey kurmadan (GitHub ile, yaklaşık 10 dakika)
+-------------------------------------------------------------------------
+1. github.com'da ücretsiz bir hesap açın (varsa giriş yapın).
+2. Sağ üstteki "+" > "New repository". Ad: gokyuzu-parkuru. "Private" seçebilirsiniz. "Create repository".
+3. Açılan sayfada "uploading an existing file" bağlantısına tıklayın.
+4. Bu klasörün İÇİNDEKİ her şeyi seçip sürükleyin (app, gradle, .github, gradlew ve diğerleri).
+   ÖNEMLİ: ".github" klasörü gizli olabilir.
+   - Windows: Dosya Gezgini > Görünüm > "Gizli öğeler" işaretli olsun.
+   - Mac: Finder'da Cmd + Shift + . (nokta) tuşlarına basın.
+5. "Commit changes" deyin.
+6. Üstteki "Actions" sekmesine gidin. "APK oluştur" işi kendiliğinden başlar (sarı daire).
+   Başlamazsa: "APK oluştur" > "Run workflow".
+7. 4-6 dakika sonra yeşil tik çıkar. İşe tıklayın, sayfanın altındaki
+   "Artifacts" bölümünden "GokyuzuParkuru-apk" dosyasını indirin.
+8. İnen zip'in içinde "app-release.apk" var. Bunu telefona atın (WhatsApp'ta kendinize, Drive, kablo...).
+
+
+YOL B – Android Studio ile
+--------------------------
+1. developer.android.com/studio adresinden Android Studio'yu kurun.
+2. "Open" ile bu klasörü (GokyuzuParkuru) açın. İlk açılışta gerekli paketleri kendisi indirir; bekleyin.
+3. Menü: Build > Build App Bundle(s) / APK(s) > Build APK(s).
+4. Sağ altta çıkan "locate" bağlantısı APK'nın yerini gösterir
+   (app/build/outputs/apk/debug/app-debug.apk).
+
+
+TELEFONA KURMA
+--------------
+- APK dosyasına telefonda dokunun.
+- "Bilinmeyen kaynaklardan yüklemeye izin ver" uyarısı çıkarsa izin verin
+  (Ayarlar > Uygulamalar > dosyayı açtığınız uygulama, ör. Dosyalar/Chrome).
+- Google Play Protect "tanınmayan uygulama" diyebilir: "Yine de yükle" deyin.
+  Bu, uygulamanın Play Store'dan gelmemesinden kaynaklanır; normaldir.
+- Uygulama "Gökyüzü Parkuru" adıyla ana ekrana gelir. Yatay ekranda açılır.
+
+Not: Bu APK kişisel kullanım içindir. Play Store'a yüklemek için ayrıca
+geliştirici hesabı ve imzalama anahtarı gerekir.
