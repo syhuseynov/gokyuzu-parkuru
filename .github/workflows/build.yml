@@ -1,7 +1,10 @@
 name: APK oluştur
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-24.04
@@ -11,16 +14,29 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Android SDK kontrol
-        run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          ls "$ANDROID_HOME/platforms" || true
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+      - name: Android SDK lisansları
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
       - name: APK'yı derle
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleRelease --no-daemon --stacktrace
+          ./gradlew assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk GokyuzuParkuru.apk
       - uses: actions/upload-artifact@v4
         with:
           name: GokyuzuParkuru-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: GokyuzuParkuru.apk
+      - name: Sürüm sayfasına koy (Releases)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v${{ github.run_number }}"
+          gh release create "$TAG" GokyuzuParkuru.apk --title "Gökyüzü Parkuru $TAG" --notes "Telefona indirip kurun."
+      - name: APK'yı apk dalına kaydet
+        run: |
+          mkdir /tmp/apkbranch && cp GokyuzuParkuru.apk /tmp/apkbranch/
+          cd /tmp/apkbranch
+          git init -q -b apk
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add GokyuzuParkuru.apk && git commit -qm "APK ${{ github.run_number }}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" apk
